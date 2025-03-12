@@ -1,0 +1,9 @@
+movie_id,movie_name,movie_status,movie_description,total_seats,booked_seats,available_seats
+0,Avengers,Available,Sci-fi action movie,200,110,90
+1,Spider man,Not Available, Adventure movie,200,0,200
+2,Avengers End game,Fully Reserved,Time Travel ,200,200,0
+3,Iron Man 2,Available,sci_fi,200,10,190
+4,Iron Man 4,Not Available,Time Travel,200,0,200
+5,Fast and Furious,Available,Action,200,190,10
+6,Hulk,Available,Action movie,200,10,190
+7,Avengers 5,Available,Scifi movie,200,185,15

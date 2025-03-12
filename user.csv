@@ -1,0 +1,6 @@
+user_id,name,date_of_birth,mob_no,email_id,gender,permission
+0,Ram,2000-1-1,9813000111,ram@xyz.com,Male,Admin
+1,shyam,2000-2-2,9813000222,shyam@xyz.com,Male,Member
+2,Hari,2000-3-3,9813000333,hari@xyz.com,Male,Member
+3,Krishna,2000-4-4,9813000444,krishna@xyz.com,Male,Admin
+4,J,2002-2-2,123,@,Male,Member
