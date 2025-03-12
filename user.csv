@@ -8,3 +8,6 @@ user_id,name,date_of_birth,mob_no,email_id,gender,username,password,token,permis
 6,Ram,2000-1-1,123,ram@xyz.com,Male,ram,pass,c138eb72-ff1c-11ef-9e8a-6018951e3e60,Admin
 7,Ram,2000-1-1,123,ram@xyz.com,Male,ram4,pass,e1170b42-ff1c-11ef-8ab6-6018951e3e60,Admin
 8,Ram,2000-1-1,123,ram@xyz.com,Male,ram454,pass,1f7774b1-ff1d-11ef-a026-6018951e3e60,Admin
+9,Ram,2000-1-1,123,ram@xyz.com,Male,ram55,pass,4a9a0199-ff1f-11ef-ae83-6018951e3e60,Admin
+10,Ram,2000-1-1,123,ram@xyz.com,Male,ram555,pass,660e6d72-ff1f-11ef-b036-6018951e3e60,Admin
+11,Ram,2000-1-1,123,ram@xyz.com,Male,ram57655,pass,82cc38c8-ff1f-11ef-a2cf-6018951e3e60,Admin

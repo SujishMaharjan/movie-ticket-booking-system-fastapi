@@ -90,9 +90,7 @@ def create_users(users: Users):
         else:
             m = Member(*user_details,filename[0])
             token_id = m.add_member()
-        # return {key : value for key, value in u.items() if key not in ['password','permission','token']}
-        return f{"Username {u.username} with {u.permission} permission is created successfully"}
-
+        return {key : value for key, value in u.items() if key not in ['password','permission','token']}
     else:
         return {"error":"Please try another username"}
 
