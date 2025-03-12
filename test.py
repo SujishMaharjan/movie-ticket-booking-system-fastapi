@@ -40,38 +40,90 @@
 # print(data)
 
 
-data={
-    "Book": [
-        {
-            "book_id": 1,
-            "title": "sss",
-            "author_name": "George Orwell",
-            "stock":4
-        },
-        {
-            "book_id": 2,
-            "title": "1984",
-            "author_name": "George Orwell",
-            "stock":4
-        }
+# data={
+#     "Book": [
+#         {
+#             "book_id": 1,
+#             "title": "sss",
+#             "author_name": "George Orwell",
+#             "stock":4
+#         },
+#         {
+#             "book_id": 2,
+#             "title": "1984",
+#             "author_name": "George Orwell",
+#             "stock":4
+#         }
 
-    ]
+#     ]
+# }
+
+# book_name = "1984"
+
+# found = False
+# for book in data["Book"]:
+    
+#     if book['title'] == book_name:
+#         found = True
+#         if book['stock'] > 0:
+#             book['stock'] -=1
+#             print(book['title'])
+#             break
+#     else:
+#         continue 
+# if not found:
+#     print("Book not found out of stock")
+
+# print(data)
+
+from pydantic import BaseModel
+from enum import StrEnum
+import datetime
+
+class GenderType(StrEnum):
+    male = "Male"
+    female ="Female"
+
+class MemberType(StrEnum):
+    admin = "Admin"
+    member = "Member"
+
+
+
+class Users(BaseModel):
+    name: str
+    date_of_birth : str
+    mob_no : int    
+    email : str
+    gender : GenderType
+    username : str
+    password : str
+    token : str
+    permission : MemberType
+
+# asd = Users(**{})
+# asd.model_dump()
+
+dict_value = {
+    "name" : "Ram",
+    "date_of_birth" : "2000-1-1",
+    "mob_no" : 123,
+    "email" : "ram@xyz.com",
+    "gender" : "Male",
+    "username" : "user",
+    "password" : "pass",
+    "token" : "token",
+    "permission" : "Admin"
+
 }
 
-book_name = "1984"
+u = Users(**dict_value)
+print(type(u),u)
 
-found = False
-for book in data["Book"]:
-    
-    if book['title'] == book_name:
-        found = True
-        if book['stock'] > 0:
-            book['stock'] -=1
-            print(book['title'])
-            break
-    else:
-        continue 
-if not found:
-    print("Book not found out of stock")
-
-print(data)
+# u = Users(**u1.items())
+result_list = list(u.model_dump().values())
+# result_dict = u.model_dump()
+# result_list = list(result_dict.values())
+# print(u)
+print(result_list)
+print(result_list[4])

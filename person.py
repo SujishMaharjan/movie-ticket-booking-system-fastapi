@@ -1,4 +1,5 @@
 import csv
+import uuid
 #creating person class
 class Person:
     
@@ -14,7 +15,7 @@ class Person:
     
 class Member(Person):
     
-    def __init__(self, name,date_of_birth,mob_no,email_id,gender,filename,member_id=None,permission="Member"):
+    def __init__(self, name, date_of_birth, mob_no, email_id, gender,username,password,permission,token,filename=None,member_id=None):
         self.user_list = []
         self.filename = filename
         #filling _user_list from users.csv files
@@ -38,7 +39,9 @@ class Member(Person):
             self._user_id = member_id
         super().__init__(name, date_of_birth, mob_no, email_id, gender)
         self._permission = "Member"
-        
+        self._username = username
+        self._password = password
+        self._token = token
 
     #while initializing read csv_file into user_list
     def read_csv_into_user_list(self):
@@ -61,12 +64,11 @@ class Member(Person):
 
 
     def add_member(self):
-        self._row=[self._user_id, self._name, self._date_of_birth, self._mob_no, self._email_id, self._gender, self._permission]
-
+        self._row=[self._user_id, self._name, self._date_of_birth, self._mob_no, self._email_id, self._gender,self._username,self._password,self._token,self._permission]
         self.user_list.append(self._row)
         self.writing_into_csv_file(self._row)
         print(f"user{self._name} Member added with {self._user_id}")
-        return self._user_id
+        return self._token
 
     def modify_movies(self):
         pass
@@ -103,7 +105,7 @@ class Member(Person):
 
 class Admin(Person):
 
-    def __init__(self, name, date_of_birth, mob_no, email_id, gender,filename,admin_id=None,permission="Admin"):
+    def __init__(self, name, date_of_birth, mob_no, email_id, gender,username,password,permission,token,filename=None,admin_id=None):
         super().__init__(name, date_of_birth, mob_no, email_id, gender)
         self.user_list = []
         
@@ -128,9 +130,12 @@ class Admin(Person):
         else:
             self._user_id = admin_id
 
+
         # self.admin_list = [user if user[6]=="Admin" for user in self._user_list]
         self._permission = "Admin"
-
+        self._username = username
+        self._password = password
+        self._token = token
 
     def read_csv_into_user_list(self):
 
@@ -153,10 +158,10 @@ class Admin(Person):
             return False
         
     def add_admin(self):
-        self._row=[self._user_id, self._name, self._date_of_birth, self._mob_no, self._email_id, self._gender, self._permission]
+        self._row=[self._user_id, self._name, self._date_of_birth, self._mob_no, self._email_id, self._gender,self._username,self._password,self._token,self._permission]
 
         self.user_list.append(self._row)
         self.writing_into_csv_file(self._row)
         print(f"user{self._name} admin added with {self._user_id}")
-        return self._user_id
+        return self._token
 
