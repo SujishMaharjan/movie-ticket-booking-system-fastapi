@@ -14,15 +14,6 @@ field_list=[["user_id","name","date_of_birth","mob_no","email_id","gender","user
             ["movie_id","movie_name","movie_status","movie_description","total_seats","booked_seats","available_seats"],
             ["reserve_id","user_id","movie_id","reserve_seat"]]
 
-INPUT_STRING = """
-Enter the option: 
-    1. CREATE DATABASE_CSV_FILES
-    2. CREATE USERS
-    3. ADD MOVIES
-    4. VIEW AND RESERVE MOVIES
-    5. UNRESERVE MOVIES
-     . Press any key to EXIT
-"""
 
 # function to read users_data from csv files based on member_type and certain field
 def read_from_csv(filename,mode,field_index,data_type):
@@ -85,24 +76,29 @@ def show_helloworld():
 def create_users(users: Users):
     create_database()
     u = users.model_dump()
-    print(u)
     u['token'] = uuid.uuid1()
     user_details = list(u.values())
-    print(user_details)
-    if users.permission == "Admin":
-        a = Admin(*user_details,filename[0])
-        token_id = a.add_admin()
-    else:
-        m = Member(*user_details,filename[0])
-        token_id = m.add_member()
-    return {"users":users,"token":token_id}
     
+    username_list = read_from_csv(filename[0],'r',6,users.username)
+    print(users.username)
+    print(username_list)
+    #logic if username_list is empty there is no username in database
+    if len(username_list) == 0:
+        if users.permission == "Admin":
+            a = Admin(*user_details,filename[0])
+            token_id = a.add_admin()
+        else:
+            m = Member(*user_details,filename[0])
+            token_id = m.add_member()
+        # return {key : value for key, value in u.items() if key not in ['password','permission','token']}
+        return f{"Username {u.username} with {u.permission} permission is created successfully"}
+
+    else:
+        return {"error":"Please try another username"}
 
 
 
-
-
-
+# app.post('/login/{username}')
 
 
 
