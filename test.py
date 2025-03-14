@@ -129,15 +129,47 @@
 # print(result_list[4])
 
 
-u ={
-    "name" : "Ram",
-    "date_of_birth" : "2000-1-1",
-    "mob_no" : 123,
-    "email" : "ram@xyz.com",
-    "gender" : "Male",
-    "username" : "12345",
-    "password" : "pass",
-    "permission" : "Admin"
-}
-response = {k:v for k,v in u.items() if k!="permission"}
-print(response)
+# u ={
+#     "name" : "Ram",
+#     "date_of_birth" : "2000-1-1",
+#     "mob_no" : 123,
+#     "email" : "ram@xyz.com",
+#     "gender" : "Male",
+#     "username" : "12345",
+#     "password" : "pass",
+#     "permission" : "Admin"
+# }
+# response = {k:v for k,v in u.items() if k!="permission"}
+# print(response)
+
+
+
+#Password Hashing algoirithm
+#Bcrypt Algorithm
+import bcrypt
+
+#example password
+password = 'password1234'
+
+#converting password to array of bytes
+bytes = password.encode('utf-8')
+print(bytes)
+
+#generating salt
+salt = bcrypt.gensalt()
+print("salt",salt)
+
+#creating hash_value
+hash = bcrypt.hashpw(bytes, salt)
+
+print("hash",hash)
+
+# taking user password
+user_password = input("Enter your password:")
+
+#encoding user password
+user_bytes = user_password.encode('utf-8')
+
+#checking password
+result = bcrypt.checkpw(user_bytes, hash)
+print(result)

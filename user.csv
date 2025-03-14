@@ -1,13 +1,3 @@
 user_id,name,date_of_birth,mob_no,email_id,gender,username,password,token,permission
-0,Ram,2000-1-1,123,ram@xyz.com,Male,user,pass,60c48a68-ff11-11ef-b0be-6018951e3e60,Member
-1,Ram,2000-1-1,123,ram@xyz.com,Male,user2,pass,26e3328c-ff19-11ef-ad40-6018951e3e60,Admin
-2,Ram,2000-1-1,123,ram@xyz.com,Male,677user2,pass,876631ef-ff19-11ef-8958-6018951e3e60,Admin
-3,Ram,2000-1-1,123,ram@xyz.com,Male,1234usernamer2,pass,8f19900c-ff1b-11ef-91ab-6018951e3e60,Admin
-4,Ram,2000-1-1,123,ram@xyz.com,Male,12345,pass,ba29b9b0-ff1b-11ef-a53c-6018951e3e60,Admin
-5,Ram,2000-1-1,123,ram@xyz.com,Male,123456,pass,5d395715-ff1c-11ef-b6a5-6018951e3e60,Admin
-6,Ram,2000-1-1,123,ram@xyz.com,Male,ram,pass,c138eb72-ff1c-11ef-9e8a-6018951e3e60,Admin
-7,Ram,2000-1-1,123,ram@xyz.com,Male,ram4,pass,e1170b42-ff1c-11ef-8ab6-6018951e3e60,Admin
-8,Ram,2000-1-1,123,ram@xyz.com,Male,ram454,pass,1f7774b1-ff1d-11ef-a026-6018951e3e60,Admin
-9,Ram,2000-1-1,123,ram@xyz.com,Male,ram55,pass,4a9a0199-ff1f-11ef-ae83-6018951e3e60,Admin
-10,Ram,2000-1-1,123,ram@xyz.com,Male,ram555,pass,660e6d72-ff1f-11ef-b036-6018951e3e60,Admin
-11,Ram,2000-1-1,123,ram@xyz.com,Male,ram57655,pass,82cc38c8-ff1f-11ef-a2cf-6018951e3e60,Admin
+0,Ram,2000-1-1,123,ram@xyz.com,Male,user123,b'$2b$12$QZiOkai5zfSpe2ksxId3FuUiSPkq96HkTQpsqktYF0xi3GYcS8NS2',b47ef5d7-008a-11f0-923e-6018951e3e60,Admin
+1,Ram,2000-1-1,123,ram@xyz.com,Male,user1234,b'$2b$12$odbch2hQyuFgYzEHbRweSOSD.KF0xQmOLVKog55b3VosukrmjBDNm',d03ebdc2-008a-11f0-8ba1-6018951e3e60,Member

@@ -5,15 +5,15 @@ from movie import Movie
 from database import Database
 from contextmanager import ContextManager
 from fastapi import FastAPI
-from pydantic import BaseModel
-from enum import Enum
-import datetime
+from pydantic import BaseModel, SecretStr
+import bcrypt
 
 filename= ['user.csv','movie.csv','reserve.csv']
 field_list=[["user_id","name","date_of_birth","mob_no","email_id","gender","username","password","token","permission"],
             ["movie_id","movie_name","movie_status","movie_description","total_seats","booked_seats","available_seats"],
             ["reserve_id","user_id","movie_id","reserve_seat"]]
 
+token_id = None
 
 # function to read users_data from csv files based on member_type and certain field
 def read_from_csv(filename,mode,field_index,data_type):
@@ -21,6 +21,16 @@ def read_from_csv(filename,mode,field_index,data_type):
         csv_reader = csv.reader(csv_file)
         specific_user_list = [line for line in csv_reader if line[field_index] == data_type]
     return specific_user_list
+
+#function to create hash_value for the password
+def create_hash_value(password):
+    bytes = password.encode("utf-8")
+    # print("bytes", bytes)
+    salt = bcrypt.gensalt()
+    hash = bcrypt.hashpw(bytes,salt)
+    # print(hash)
+    return hash
+
 
 
 # #function to read available movies from movies csv files
@@ -52,6 +62,17 @@ class Users(BaseModel):
     password : str
     permission : MemberType
     token : Optional[str] = None
+
+
+class UsersResponse(BaseModel):
+    name: str
+    date_of_birth : str
+    mob_no : int    
+    email : str
+    gender : GenderType
+    username : str
+    permission : MemberType
+    
     
 
 # asd = Users(**{})
@@ -72,16 +93,32 @@ app = FastAPI()
 def show_helloworld():
     return "Hello World"
 
+@app.get('/token')
+def show_token_id():
+    return {"token_id":token_id}
+
 @app.post('/users/')
 def create_users(users: Users):
     create_database()
     u = users.model_dump()
     u['token'] = uuid.uuid1()
+    
+    # #creating hash_value
+    # print("before",type(u['password']),u['password'])
+    # u['password'] = create_hash_value(u['password'])
+    # user_details = list(u.values())
+    # print("after",type(user_details[6]),user_details[6])
+    
+    u['password'] = create_hash_value(u['password'])
     user_details = list(u.values())
+    # print(user_details)
+    # print("before",type(user_details[6]),user_details[6])
+    # user_details[6] = create_hash_value(u['password'])
+    # print("after",type(user_details[6]),user_details[6])
+    # print(user_details)
     
     username_list = read_from_csv(filename[0],'r',6,users.username)
-    print(users.username)
-    print(username_list)
+    
     #logic if username_list is empty there is no username in database
     if len(username_list) == 0:
         if users.permission == "Admin":
@@ -96,11 +133,42 @@ def create_users(users: Users):
 
 
 
-# app.post('/login/{username}')
+@app.post('/login/')
+def login_user(username : str, password: SecretStr):
+    username_list = read_from_csv(filename[0],'r',6,username)
+    print(username_list)
+    if len(username_list) == 0:
+        return {"error": "No such username. Please enter valid username"}
+    #username_list will have list within list with only data of that username if found
+    
+    #getting password from db which is stored in str format as in csv it saves in str even hashed passwords
+    password_from_db = username_list[0][7]
+    # print(type(password_from_db),password_from_db)
+    # print("password_from_db",password_from_db)
 
+    #getting actual value from SecretStr and encoding in byte form
+    user_password_bytes = password.get_secret_value().encode('utf-8')
+    
+    #using eval because it converts automatically to it actual type byteform
+    result = bcrypt.checkpw(user_password_bytes,eval(password_from_db))
+    # shows error like this argument 'hashed_password': 'str' object cannot be converted to 'PyBytes'
+    
 
+    if result:
+        print("Login Successfully")
+        global token_id
+        token_id = username_list[0][8]    
+        return token_id    
+    else:
+        return {"error": "Wrong password.Please try again"}
 
+@app.post('/logout/')
+def logout_user():
+    global token_id
+    token_id = None
 
+# @app.post('/movies')
+# def add_movies(movie :)
 
 
 
