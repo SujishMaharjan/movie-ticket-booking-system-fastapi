@@ -1,1 +1,6 @@
-movie_id,movie_name,movie_status,movie_description,total_seats,booked_seats,available_seats
+movie_id,movie_name,movie_status,movie_description,movie_token,total_seats,booked_seats,available_seats
+0,Avengers 1,Available,Sci-fi action robots,200,0,200
+1,Avengers 1,Available,Sci-fi action robots,200,0,200
+2,Avengers 1,Available,Sci-fi action robots,200,0,200
+3,Avengers 1,Available,Sci-fi action robots,200,0,200
+4,Avengers 1,Available,Sci-fi action robots,6a6a1ba9-00a0-11f0-b56c-6018951e3e60,200,0,200

@@ -4,7 +4,8 @@ import csv
 class Movie:
     
 
-    def __init__(self, movie_name, movie_description, movie_status,filename,movie_id=None):
+    def __init__(self, movie_name, movie_status, movie_description,movie_token,filename=None,movie_id=None):
+        print(movie_name, movie_status, movie_description,movie_token,filename,movie_id)
         self._movie_list= []
         self.filename = filename
         if len(self._movie_list) == 0:
@@ -21,8 +22,9 @@ class Movie:
 
 
         self._movie_name = movie_name
-        self._movie_description = movie_description
         self._movie_status = movie_status #[either available or un_available]
+        self._movie_description = movie_description
+        self._movie_token = movie_token
         if self._movie_status == "Unavailable":
             self._total_seats = 0
         self._total_seats = 200
@@ -54,10 +56,11 @@ class Movie:
 
     #movie add can be done only by admins
     def add_movie(self):
-        self._row=[self._movie_id, self._movie_name,self._movie_status, self._movie_description, self._total_seats, self._booked_seats, self._available_seats]
+        self._row=[self._movie_id, self._movie_name,self._movie_status, self._movie_description,self._movie_token,self._total_seats, self._booked_seats, self._available_seats]
 
         self._movie_list.append(self._row)
         self.writing_into_csv_file(self._row)
+        return self._movie_token
 
 
     def delete_movie(self):

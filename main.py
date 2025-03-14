@@ -4,15 +4,19 @@ from reservation import Reservation
 from movie import Movie
 from database import Database
 from contextmanager import ContextManager
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException, status
 from pydantic import BaseModel, SecretStr
 import bcrypt
+from enum import StrEnum
+from typing import Optional
+
 
 filename= ['user.csv','movie.csv','reserve.csv']
 field_list=[["user_id","name","date_of_birth","mob_no","email_id","gender","username","password","token","permission"],
-            ["movie_id","movie_name","movie_status","movie_description","total_seats","booked_seats","available_seats"],
+            ["movie_id","movie_name","movie_status","movie_description","movie_token","total_seats","booked_seats","available_seats"],
             ["reserve_id","user_id","movie_id","reserve_seat"]]
 
+global token_id
 token_id = None
 
 # function to read users_data from csv files based on member_type and certain field
@@ -39,8 +43,8 @@ def create_hash_value(password):
 #         csv_reader = csv.reader(csv_file)
 #         specific_user_list = [line for line in csv_reader if line[6] == member_type]
 #     return specific_user_list
-from enum import StrEnum
 
+# from enum import StrEnum
 class GenderType(StrEnum):
     male = "Male"
     female ="Female"
@@ -49,9 +53,14 @@ class MemberType(StrEnum):
     admin = "Admin"
     member = "Member"
 
-from typing import Optional
+class AvailableType(StrEnum):
+    available = "Available"
+    unavailable = "Unavailable"
+    fully_reserved = "Fully Reserved"
 
 
+# from enum import StrEnum
+# from typing import Optional
 class Users(BaseModel):
     name: str
     date_of_birth : str
@@ -73,6 +82,14 @@ class UsersResponse(BaseModel):
     username : str
     permission : MemberType
     
+class MovieModel(BaseModel):
+    movie_name: str
+    movie_status : AvailableType
+    movie_description : str
+    movie_token : Optional[str] = None
+
+
+
     
 
 # asd = Users(**{})
@@ -122,9 +139,11 @@ def create_users(users: Users):
     #logic if username_list is empty there is no username in database
     if len(username_list) == 0:
         if users.permission == "Admin":
+            print(user_details)
             a = Admin(*user_details,filename[0])
             token_id = a.add_admin()
         else:
+            print(user_details)
             m = Member(*user_details,filename[0])
             token_id = m.add_member()
         return {key : value for key, value in u.items() if key not in ['password','permission','token']}
@@ -167,9 +186,35 @@ def logout_user():
     global token_id
     token_id = None
 
-# @app.post('/movies')
-# def add_movies(movie :)
+@app.post('/movies/')
+def add_movies(movie :MovieModel):
+    #extracting only admin's token
+    admin_list = [user[8] for user in  read_from_csv(filename[0],'r',9,'Admin')]
+    print(admin_list)
+    if token_id in admin_list:
+        d = movie.model_dump()
+        d['movie_token'] = uuid.uuid1()
+        movie_details_list = list(d.values())
+        print(movie_details_list)
+        m = Movie(*movie_details_list,filename[1])
+        movie_token =m.add_movie()
+        return {"message":"Movie added Successfully","movie_token": movie_token}
+        
+    else:
+        # print("'error':'Invalid Users'")
+        return {'error':'Invalid Users'}
 
+
+
+
+# class Data(BaseModel):
+#     fname: str
+#     lname: str
+
+
+# @app.post('/test/')
+# def show_data(data: Data):
+#     return {"data": data}
 
 
 
